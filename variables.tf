@@ -13,7 +13,7 @@ variable ec2_instance_type {
 variable instance_count {
   description = "Number of instances to provision."
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable ebs_volume {
