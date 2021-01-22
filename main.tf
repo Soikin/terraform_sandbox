@@ -9,7 +9,7 @@ terraform {
 
 provider "aws" {
   profile = "default"
-  region  = var.region
+  region  = var.aws_region
 }
 
 resource "aws_key_pair" "pub_key" {
@@ -39,29 +39,26 @@ data "aws_ami" "rhel8_latest" {
   }
 }
 
-resource "aws_instance" "ec2instance" {
+resource "aws_instance" "ec2_instance" {
   ami           = data.aws_ami.rhel8_latest.id
-  instance_type = var.instance_type
+  instance_type = var.ec2_instance_type
   key_name      = var.public_key["name"]
-  user_data     = file("init.sh")
+  # user_data     = file("init.sh")
+  user_data = <<-EOF
+    #!/bin/bash
+    dnf update -y
+    dnf clean all -y
+    EOF
 }
 
 resource "aws_ebs_volume" "volume" {
-  availability_zone = aws_instance.ec2instance.availability_zone
-  type              = "gp2"
-  size              = 2
+  availability_zone = aws_instance.ec2_instance.availability_zone
+  type              = var.ebs_volume.type
+  size              = var.ebs_volume.size
 }
 
-resource "aws_volume_attachment" "volume-attachment" {
-  device_name = "/dev/xvdb"
-  instance_id = aws_instance.ec2instance.id
+resource "aws_volume_attachment" "volume_attachment" {
+  device_name = var.ebs_volume.device_name
+  instance_id = aws_instance.ec2_instance.id
   volume_id   = aws_ebs_volume.volume.id
-}
-
-output "ip" {
-  value = aws_instance.ec2instance.public_ip
-}
-
-output "volume" {
-  value = aws_volume_attachment.volume-attachment.device_name
 }
