@@ -6,17 +6,34 @@ resource "aws_key_pair" "pub_key" {
   }
 }
 
+resource "aws_security_group" "allow_ssh" {
+  name   = "allow-ssh"
+  vpc_id = var.vpc_id
+  ingress {
+    cidr_blocks = [var.source_cidr]
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "ec2_instance" {
-  count         = var.instance_count
-  ami           = data.aws_ami.rhel8_latest.id
-  instance_type = var.ec2_instance_type
-  key_name      = var.public_key["name"]
-  # user_data     = file("init.sh")
-  user_data = <<-EOF
-    #!/bin/bash
-    dnf update -y
-    dnf clean all -y
-    EOF
+  count           = var.instance_count
+  ami             = data.aws_ami.rhel8_latest.id
+  instance_type   = var.ec2_instance_type
+  key_name        = var.public_key["name"]
+  security_groups = [aws_security_group.allow_ssh.name]
+  user_data       = file("init.sh")
+  depends_on = [
+    aws_key_pair.pub_key,
+    aws_security_group.allow_ssh
+  ]
   tags = {
     Name = "${local.setup_name}_ec2_instance"
   }

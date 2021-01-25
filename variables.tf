@@ -35,6 +35,16 @@ variable "public_key" {
   type        = map(string)
   default = {
     name = "Ales.Soikin@itechart-group.com"
-    key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCkgPoyx4oq6m7TH4f8GiMD5LubYj16bIw3cp7Uh8xcWVnIqD6kS7vaKungd62NdsXdgT6yAG2GWkj0EIxFs2gQIEOO3LuPgnxMwxCOMWorhd72ZDqxElJaAgSywvH5EfzXgUUdbVgHQSqzxK+ieLiE/+fjdX2wdE8NCou1ISIzIHLEOcU0kJ+Ho7zVJQuTHl4XTZbwn1BvKFNGd4Qok1ulmBD9OgUnSoL+s9ioGhtADRr+emOMJ39L1Ay5i7b6aTQBw05RsnPZCpSukJKp4K8qSF3ZwCSNX/20oO1tM29B/xUuNculFMhjEMUlLTNoTZSCb4lvWDdURCcNYR0hXpqraXl7/xOy4GCpXTp3F0vpUZwXKI1uCSpXM1nfIL+86twlcmZvB3lcrG3MEjHz7gUnE26mm/ILindl09T2f+rsRBNFKm2MIFAM0Uxq+lMv9qTYuauY6+XUHl+odN1pG+XPtJNZOQOHaqRMuTLzARAZ2l2ug2tdFkrMLDtRLeh2DN1nVPyshtYauCvNRtKgzVILaWZSDbEbCYtauzpNUMr86JaClZlQiCFm+9XbzzZYVEpvmCtBKfXhUo/QM5CTBfczcOgZrrq3EmGffun0WWJ3q6ZXK3dDtMBmBfTIJVgQv4Tz+FM5DoQcKxTeD+oe2KHCvogJjTJ8KJCy6nrReXShQQ== Ales.Soikin@itechart-group.com"
+    key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCXl2yWOAQMVRZ9QGPlr9EOmc9CA3Sxt7IJUf7mXoRnkGlt6/o99ofdJ/IqKz3LHtfHjvkvpbpFHDxZ/0hwxIxO+MckWuGAYTPwk6gsPQBAwI406m/7X2Y2wrx0uwl6yy7VEk22E6sVKQGKYj9o8ZTeQp+n5MdmJnEzApJrkr+lTCRqAT0TWRjfSBiztx6rOHOgFI5jVT19gK6KOKyS5aHiY/BLW7NBcjdVdiU0pwFXcI1j4pb+XsYm4tZfyL52Sc8bzS2m48R2+p8DvwZyM0oWPDLcUs8BwkhSAtycPeJVSDNugwsTXKOq9tMZZ3RCQVCpEwYSxQe0m03d/pS5XEhU+2GBUOEqsO3OwxOlS180N2f7+8ueT1/sq0qE1WOHF30VyIn2LVaW3+FoX+UBRXLJjEhCnTNMNpR/cWNVxTDTYCi8IIlCPGywiPCEEdz/oKkB3ktKDTT6ZPboqgB/RayRMW08fk44GRtwO83cmoss+xqRqdLhgXfm25B+hR67CQrzkjoDydsGc+WaHcJGyiZHzO/ATOl9uXwVLdDE8aX5tUxciWkQdebmN7tuAT8eqk2HNHEFg5EUH/kl8b+JeQzy3qpv9R+hDBHbCuZ5DtG7It1YFeR56GiZwO8KYTUsqQ7Y6YSspcqdynWGbSoGLoJkWlNelbOiPo78EKd/YyLLmQ== Ales.Soikin@itechart-group.com"
   }
+}
+
+variable "source_cidr" { # Needs to be defined in terraform.tfvars
+  description = "Source cids for access via ssh"
+  type        = string
+}
+
+variable "vpc_id" { # Needs to be defined in terraform.tfvars
+  description = "vpc id"
+  type        = string
 }
