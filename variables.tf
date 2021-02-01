@@ -48,3 +48,9 @@ variable "vpc_id" { # Needs to be defined in terraform.tfvars
   description = "vpc id"
   type        = string
 }
+
+variable "create_volume" {
+  description = "Create additional volumes for vms or not"
+  default     = true
+  type        = bool
+}
